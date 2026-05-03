@@ -1,0 +1,1756 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Past Simple / Past Continuous - Version Game</title>
+  <style>
+    :root {
+      --bg: #eef4f8;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d8e1ea;
+      --blue: #2563eb;
+      --blue-soft: #eaf1ff;
+      --teal: #0f766e;
+      --teal-soft: #e6f6f3;
+      --green: #17803d;
+      --green-soft: #e9f8ee;
+      --red: #b42318;
+      --red-soft: #fff0ed;
+      --yellow: #f7c948;
+      --peach: #fff1e6;
+      --purple: #6941c6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, #dff2f1 0, var(--bg) 280px, #f8fbfd 100%);
+      font-size: 17px;
+    }
+
+    main {
+      width: min(1160px, calc(100% - 32px));
+      margin: 26px auto;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+      padding: 22px;
+      border-radius: 22px;
+      color: #fff;
+      background: #163b57;
+      box-shadow: 0 18px 45px rgba(22, 59, 87, 0.18);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: inherit;
+      opacity: 0.82;
+      line-height: 1.45;
+      max-width: 720px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .toolbox,
+    .exercise {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 14px 36px rgba(20, 33, 61, 0.08);
+    }
+
+    .toolbox {
+      padding: 18px;
+      position: sticky;
+      top: 16px;
+    }
+
+    .toolbox h2,
+    .exercise h2 {
+      margin: 0 0 12px;
+      font-size: 1.08rem;
+    }
+
+    .verb-list {
+      display: grid;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .verb-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: #f8fbff;
+      border: 1px solid var(--line);
+      font-size: 0.95rem;
+    }
+
+    .verb-list b {
+      white-space: nowrap;
+    }
+
+    .verb-list span {
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .buttons {
+      display: grid;
+      gap: 10px;
+    }
+
+    button {
+      min-height: 46px;
+      border: 0;
+      border-radius: 14px;
+      padding: 11px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #fff;
+      background: var(--blue);
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.16);
+      transition: transform 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.2);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 5px 12px rgba(37, 99, 235, 0.14);
+    }
+
+    button.secondary {
+      color: var(--ink);
+      background: var(--teal-soft);
+      border: 1px solid #b7e1db;
+    }
+
+    button.ghost {
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 8px 18px rgba(23, 32, 51, 0.08);
+    }
+
+    .exercise {
+      padding: 24px;
+    }
+
+    .intro {
+      margin: 0 0 18px;
+      padding: 14px;
+      border-radius: 16px;
+      background: #fff8dc;
+      border: 1px solid #f0da8b;
+      line-height: 1.45;
+    }
+
+    .story-box {
+      display: block;
+      gap: 12px;
+      margin: 0 0 18px;
+      padding: 14px;
+      border-radius: 18px;
+      background: var(--teal-soft);
+      border: 1px solid #c8ebe5;
+      line-height: 1.45;
+    }
+
+    .wolf {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #d8e1ec;
+      border: 2px solid #97a6ba;
+      font-size: 1.8rem;
+    }
+
+    .story-box p {
+      margin: 0;
+    }
+
+    .learning-guide {
+      margin: 0 0 18px;
+      padding: 18px;
+      border: 1px solid #d6d2ff;
+      border-radius: 20px;
+      background: #fbfaff;
+    }
+
+    .learning-guide h2 {
+      margin-bottom: 10px;
+    }
+
+    .theory-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .theory-card {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(20, 33, 61, 0.035);
+    }
+
+    .theory-card h3 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+    }
+
+    .theory-card p {
+      margin: 0 0 8px;
+      line-height: 1.5;
+    }
+
+    .theory-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .examples {
+      display: grid;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 14px;
+      background: #f7fafc;
+    }
+
+    .examples p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .key-idea {
+      margin: 0 0 16px;
+      padding: 14px;
+      border-radius: 18px;
+      color: #173b33;
+      background: var(--teal-soft);
+      border: 1px solid #b7e1db;
+      line-height: 1.45;
+    }
+
+    .steps {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .steps li {
+      display: grid;
+      grid-template-columns: 30px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(20, 33, 61, 0.035);
+    }
+
+    .step-number {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--purple);
+      font-weight: 700;
+    }
+
+    .steps p {
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    .mini-rule {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .rule {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .sentence {
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(20, 33, 61, 0.04);
+    }
+
+    .sentence:first-of-type {
+      border-top: 1px solid var(--line);
+    }
+
+    .letter {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--teal);
+      font-weight: 700;
+    }
+
+    .line {
+      line-height: 1.7;
+      font-size: 1.08rem;
+    }
+
+    .sentence-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: start;
+    }
+
+    input {
+      width: min(260px, 100%);
+      min-height: 44px;
+      padding: 9px 12px;
+      margin: 0 6px;
+      border: 2px solid #b9c6d8;
+      border-radius: 12px;
+      background: #fff;
+      font-size: 1rem;
+      transition: border-color 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--teal);
+      box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.12);
+    }
+
+    input.correct {
+      border-color: var(--green);
+      background: var(--green-soft);
+    }
+
+    input.wrong {
+      border-color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .feedback {
+      min-height: 24px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .sentence-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .hint-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 0;
+    }
+
+    .hint-row button {
+      min-width: auto;
+      min-height: 34px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      box-shadow: none;
+    }
+
+    .sentence-actions button {
+      min-width: 150px;
+      min-height: 44px;
+      padding: 9px 18px;
+    }
+
+    .feedback.good {
+      color: var(--green);
+      font-weight: 700;
+      background: var(--green-soft);
+      border-radius: 12px;
+      padding: 8px 10px;
+    }
+
+    .feedback.bad {
+      color: var(--red);
+      font-weight: 700;
+      background: var(--red-soft);
+      border-radius: 12px;
+      padding: 8px 10px;
+    }
+
+    .hint {
+      display: none;
+      margin: 10px 0 0;
+      padding: 10px 12px;
+      border-left: 4px solid var(--yellow);
+      background: #fffaf0;
+      color: #554315;
+      line-height: 1.4;
+    }
+
+    .hint.visible {
+      display: block;
+    }
+
+    .verb-practice {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 2px solid var(--line);
+    }
+
+    .practice-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .practice-table th,
+    .practice-table td {
+      padding: 10px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .practice-table th {
+      background: #f7f9fc;
+      font-size: 0.92rem;
+    }
+
+    .verb-type {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: #224a9b;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .practice-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .practice-table input {
+      width: 100%;
+      margin: 0;
+    }
+
+    .answer-label {
+      display: block;
+      margin: 0 0 7px;
+      color: #596a7c;
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    .table-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .table-actions button {
+      min-width: 140px;
+    }
+
+    @media (max-width: 760px) {
+      header,
+      .layout {
+        display: block;
+      }
+
+      header {
+        padding: 20px;
+        border-radius: 20px;
+      }
+
+      .toolbox {
+        position: static;
+        margin-bottom: 14px;
+      }
+
+      .exercise {
+        padding: 18px;
+      }
+
+      .verb-list {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .sentence {
+        grid-template-columns: 1fr;
+      }
+
+      .sentence-main {
+        grid-template-columns: 1fr;
+      }
+
+      .story-box {
+        grid-template-columns: 1fr;
+      }
+
+      .theory-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .steps li {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      main {
+        width: calc(100% - 16px);
+        margin: 8px auto 16px;
+      }
+
+      body {
+        font-size: 16px;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+      }
+
+      .verb-list {
+        grid-template-columns: 1fr;
+      }
+
+      input {
+        display: block;
+        width: 100%;
+        margin: 8px 0;
+      }
+
+      .sentence {
+        padding: 16px;
+      }
+
+      .sentence-actions button {
+        width: 100%;
+      }
+
+      .hint-row {
+        justify-content: flex-end;
+      }
+
+      .practice-table {
+        min-width: 660px;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+    }
+
+    /* Oxford-style visual refresh */
+    :root {
+      --bg: #f7f3e8;
+      --panel: #fffdf8;
+      --ink: #203348;
+      --muted: #657487;
+      --line: #e1d8c8;
+      --blue: #2f6f9f;
+      --blue-soft: #e7f2f8;
+      --teal: #2f8c80;
+      --teal-soft: #e6f4ef;
+      --green: #2d7b4f;
+      --green-soft: #eaf6ee;
+      --red: #b0443e;
+      --red-soft: #fff0ee;
+      --yellow: #f4c95d;
+      --peach: #fff0df;
+      --purple: #7257a5;
+      --paper: #fffaf1;
+      --sun: #ffda75;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Trebuchet MS", "Segoe UI", Arial, Helvetica, sans-serif;
+      font-size: 18px;
+      background:
+        radial-gradient(circle at top left, rgba(255, 218, 117, 0.38), transparent 320px),
+        linear-gradient(180deg, #e7f5f0 0, #f7f3e8 430px, #fbf8f0 100%);
+    }
+
+    main {
+      width: min(1180px, calc(100% - 36px));
+      margin: 28px auto 42px;
+    }
+
+    header {
+      position: relative;
+      overflow: hidden;
+      align-items: center;
+      padding: 28px;
+      border: 0;
+      border-radius: 28px;
+      color: #203348;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 250, 241, 0.96)),
+        linear-gradient(135deg, #d7f0ec, #fff0cf);
+      box-shadow: 0 18px 46px rgba(56, 77, 96, 0.16);
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      right: -56px;
+      bottom: -64px;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: rgba(47, 111, 159, 0.09);
+    }
+
+    h1 {
+      max-width: 780px;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.05;
+      color: #1d4058;
+    }
+
+    .subtitle {
+      max-width: 720px;
+      color: #596a7c;
+      opacity: 1;
+      font-size: 1.08rem;
+    }
+
+    .layout {
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 22px;
+    }
+
+    .toolbox,
+    .exercise {
+      border: 0;
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: 0 18px 42px rgba(56, 77, 96, 0.12);
+    }
+
+    .toolbox {
+      padding: 20px;
+      top: 18px;
+    }
+
+    .toolbox h2,
+    .exercise h2 {
+      color: #1d4058;
+      font-size: 1.22rem;
+      letter-spacing: 0;
+    }
+
+    .verb-list {
+      gap: 10px;
+    }
+
+    .verb-list li {
+      align-items: center;
+      padding: 11px 13px;
+      border: 1px solid #eadfce;
+      border-radius: 18px;
+      background: #fffaf1;
+      box-shadow: 0 4px 12px rgba(98, 81, 54, 0.04);
+    }
+
+    .verb-list b {
+      color: #1d4058;
+      font-size: 1rem;
+    }
+
+    .verb-list span {
+      color: #667487;
+      font-size: 0.92rem;
+    }
+
+    .buttons {
+      gap: 12px;
+      padding-top: 4px;
+    }
+
+    button {
+      min-height: 52px;
+      border-radius: 18px;
+      padding: 12px 18px;
+      font-size: 1rem;
+      background: #2f6f9f;
+      box-shadow: 0 10px 22px rgba(47, 111, 159, 0.18);
+    }
+
+    button.secondary {
+      color: #1d4058;
+      background: #e8f4f1;
+      border: 2px solid #bfe1d9;
+      box-shadow: 0 8px 18px rgba(47, 140, 128, 0.12);
+    }
+
+    button.ghost {
+      border: 2px solid #eadfce;
+      background: #fffaf1;
+      box-shadow: 0 8px 18px rgba(98, 81, 54, 0.08);
+    }
+
+    .exercise {
+      padding: clamp(18px, 3vw, 32px);
+    }
+
+    .learning-guide {
+      padding: clamp(16px, 2.6vw, 26px);
+      border: 0;
+      border-radius: 26px;
+      background: #fff7e8;
+      box-shadow: inset 0 0 0 2px rgba(244, 201, 93, 0.2);
+    }
+
+    .learning-guide > h2 {
+      margin-bottom: 14px;
+      font-size: 1.45rem;
+    }
+
+    .key-idea {
+      padding: 15px 16px;
+      border: 0;
+      border-radius: 20px;
+      background: #e6f4ef;
+      color: #24483f;
+      font-size: 1rem;
+    }
+
+    .theory-grid {
+      gap: 14px;
+    }
+
+    .theory-card {
+      padding: 16px;
+      border: 2px solid #efe3ce;
+      border-radius: 22px;
+      background: #fffdf8;
+      box-shadow: 0 10px 22px rgba(98, 81, 54, 0.06);
+    }
+
+    .theory-card h3 {
+      color: #2f6f9f;
+      font-size: 1.12rem;
+    }
+
+    .theory-card p,
+    .steps p {
+      line-height: 1.58;
+    }
+
+    .examples {
+      border-radius: 18px;
+      background: #f3f8fb;
+    }
+
+    .steps {
+      gap: 12px;
+    }
+
+    .steps li {
+      grid-template-columns: 38px minmax(0, 1fr);
+      padding: 14px;
+      border: 2px solid #e8ddca;
+      border-radius: 22px;
+      background: #fffdf8;
+    }
+
+    .step-number {
+      width: 34px;
+      height: 34px;
+      background: #2f6f9f;
+      font-size: 1rem;
+    }
+
+    .story-box {
+      padding: 16px;
+      border: 0;
+      border-radius: 24px;
+      background: #e6f4ef;
+      box-shadow: inset 0 0 0 2px rgba(47, 140, 128, 0.12);
+    }
+
+    .wolf {
+      width: 60px;
+      height: 60px;
+      border: 0;
+      color: #1d4058;
+      background: #fffdf8;
+      box-shadow: inset 0 0 0 2px #d7e7df;
+      font-weight: 800;
+    }
+
+    .intro {
+      border: 0;
+      border-radius: 22px;
+      background: #fff0cf;
+      box-shadow: inset 0 0 0 2px rgba(244, 201, 93, 0.2);
+    }
+
+    .sentence {
+      grid-template-columns: 48px minmax(0, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+      padding: 20px;
+      border: 2px solid #eadfce;
+      border-radius: 24px;
+      background: #fffdf8;
+      box-shadow: 0 12px 26px rgba(98, 81, 54, 0.07);
+    }
+
+    .sentence:first-of-type {
+      border-top: 2px solid #eadfce;
+    }
+
+    .letter {
+      width: 42px;
+      height: 42px;
+      background: #f4c95d;
+      color: #3f3422;
+      box-shadow: inset 0 -2px 0 rgba(63, 52, 34, 0.08);
+    }
+
+    .line {
+      font-size: 1.16rem;
+      line-height: 1.8;
+    }
+
+    input {
+      min-height: 48px;
+      border: 2px solid #d6c8b5;
+      border-radius: 16px;
+      background: #ffffff;
+      font-size: 1.08rem;
+    }
+
+    input:focus {
+      border-color: #2f8c80;
+      box-shadow: 0 0 0 5px rgba(47, 140, 128, 0.13);
+    }
+
+    input.correct {
+      border-color: #2d7b4f;
+      background: #edf8ef;
+    }
+
+    input.wrong {
+      border-color: #b0443e;
+      background: #fff2ef;
+    }
+
+    .sentence-actions {
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    .sentence-actions button {
+      min-width: 180px;
+      min-height: 50px;
+    }
+
+    .feedback {
+      min-height: 30px;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    .hint {
+      border-left: 0;
+      border-radius: 18px;
+      background: #fff7e8;
+      box-shadow: inset 0 0 0 2px rgba(244, 201, 93, 0.18);
+    }
+
+    .verb-practice {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 3px dotted #dccfb9;
+    }
+
+    .practice-table {
+      border: 0;
+      border-radius: 22px;
+      box-shadow: 0 12px 26px rgba(98, 81, 54, 0.07);
+    }
+
+    .practice-table th {
+      color: #1d4058;
+      background: #e7f2f8;
+    }
+
+    .practice-table th,
+    .practice-table td {
+      padding: 13px;
+      border-bottom: 1px solid #e8ddca;
+    }
+
+    .verb-type {
+      background: #e6f4ef;
+      color: #286b5e;
+    }
+
+    .table-actions {
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    @media (max-width: 760px) {
+      main {
+        width: min(100% - 20px, 680px);
+        margin-top: 12px;
+      }
+
+      header {
+        padding: 22px;
+      }
+
+      .toolbox {
+        margin-bottom: 18px;
+      }
+
+      .verb-list {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .exercise {
+        padding: 16px;
+      }
+
+      .theory-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .story-box,
+      .sentence,
+      .steps li {
+        grid-template-columns: 1fr;
+      }
+
+      .letter {
+        margin-bottom: -4px;
+      }
+
+      input {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        font-size: 16.5px;
+      }
+
+      main {
+        width: calc(100% - 14px);
+      }
+
+      header,
+      .toolbox,
+      .exercise {
+        border-radius: 22px;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .verb-list {
+        grid-template-columns: 1fr;
+      }
+
+      .learning-guide,
+      .sentence,
+      .theory-card {
+        border-radius: 20px;
+      }
+
+      .sentence-actions button,
+      .table-actions button {
+        width: 100%;
+      }
+
+      .table-actions {
+        display: grid;
+      }
+    }
+
+    /* Game version layer */
+    .game-banner {
+      position: sticky;
+      top: 8px;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      margin: 0 0 22px;
+      padding: 14px 16px;
+      border-radius: 26px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 247, 232, 0.95)),
+        linear-gradient(135deg, #e7f2f8, #fff0cf);
+      box-shadow: 0 16px 34px rgba(56, 77, 96, 0.12);
+    }
+
+    .mission-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .mission-title {
+      margin: 0;
+      color: #1d4058;
+      font-size: clamp(1.2rem, 2vw, 1.55rem);
+    }
+
+    .mission-copy {
+      margin: 8px 0 0;
+      color: #596a7c;
+      line-height: 1.45;
+    }
+
+    .mission-count {
+      flex: 0 0 auto;
+      padding: 7px 11px;
+      border-radius: 999px;
+      color: #1d4058;
+      background: #fffdf8;
+      border: 1px solid #eadfce;
+      font-size: 0.95rem;
+      font-weight: 900;
+    }
+
+    .progress-shell {
+      margin-top: 14px;
+      height: 16px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #eadfce;
+      box-shadow: inset 0 2px 4px rgba(63, 52, 34, 0.08);
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2f8c80, #f4c95d);
+      transition: width 260ms ease;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .badge {
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: #7a6843;
+      background: #fffaf1;
+      border: 1px solid #eadfce;
+      font-size: 0.9rem;
+      font-weight: 800;
+      opacity: 0.55;
+      transition: transform 180ms ease, opacity 180ms ease, background-color 180ms ease;
+    }
+
+    .badge.unlocked {
+      color: #24483f;
+      background: #e6f4ef;
+      border-color: #bfe1d9;
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+
+    .complete-card {
+      display: none;
+      margin: 18px 0 0;
+      padding: 16px;
+      border-radius: 24px;
+      color: #24483f;
+      background: #e6f4ef;
+      box-shadow: inset 0 0 0 2px rgba(47, 140, 128, 0.14);
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .complete-card.visible {
+      display: block;
+    }
+
+    .sentence.correct-card {
+      border-color: #bfe1d9;
+      background: linear-gradient(180deg, #fffdf8, #f2fbf7);
+    }
+
+    @media (max-width: 760px) {
+    @media (max-width: 480px) {
+      .game-banner {
+        padding: 16px;
+        border-radius: 22px;
+      }
+
+      .mission-top {
+        display: block;
+      }
+
+      .mission-count {
+        display: inline-block;
+        margin-top: 8px;
+      }
+    }
+
+    /* Final mobile layout overrides */
+    @media (max-width: 760px) {
+      .layout {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .exercise {
+        order: 1;
+      }
+
+      .toolbox {
+        order: 2;
+        width: 100%;
+        margin: 18px 0 0;
+      }
+
+      .steps li {
+        grid-template-columns: 38px minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .steps li {
+        grid-template-columns: 34px minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>Past Simple or Past Continuous</h1>
+        <p class="subtitle">Escribí la forma correcta del verbo en Past Simple o Past Continuous.</p>
+      </div>
+    </header>
+
+    <section class="game-banner" aria-label="Mission progress">
+      <div>
+        <div class="mission-top">
+          <h2 class="mission-title">Verb Rescue Mission</h2>
+          <span class="mission-count" id="mission-count">0 de 26</span>
+        </div>
+        <p class="mission-copy">Los badges son logros: se desbloquean a medida que vas respondiendo bien. Si usás <b>Pista</b>, esa respuesta correcta vale medio punto.</p>
+        <div class="progress-shell" aria-hidden="true">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="badge-row" aria-label="Badges">
+          <span class="badge" data-badge="6">Inicio</span>
+          <span class="badge" data-badge="13">Mitad</span>
+          <span class="badge" data-badge="20">Verb Hero</span>
+          <span class="badge" data-badge="26">Misión completa</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <aside class="toolbox">
+        <h2>Glosario</h2>
+        <ul class="verb-list">
+          <li><b>arrive</b><span>llegar</span></li>
+          <li><b>bake</b><span>hornear</span></li>
+          <li><b>blow down</b><span>derribar soplando</span></li>
+          <li><b>knock</b><span>golpear</span></li>
+          <li><b>shave</b><span>afeitar</span></li>
+          <li><b>fall</b><span>caer</span></li>
+          <li><b>feel</b><span>sentir</span></li>
+          <li><b>hide</b><span>esconderse</span></li>
+          <li><b>look for</b><span>buscar</span></li>
+          <li><b>notice</b><span>darse cuenta</span></li>
+          <li><b>play</b><span>jugar</span></li>
+          <li><b>put</b><span>poner</span></li>
+          <li><b>walk</b><span>caminar</span></li>
+          <li><b>cook</b><span>cocinar</span></li>
+          <li><b>run</b><span>correr</span></li>
+          <li><b>build</b><span>construir</span></li>
+          <li><b>sneeze</b><span>estornudar</span></li>
+          <li><b>use</b><span>usar</span></li>
+          <li><b>write</b><span>escribir</span></li>
+        </ul>
+        <div class="buttons">
+          <button class="ghost" id="reset">Reiniciar</button>
+        </div>
+      </aside>
+
+      <section class="exercise">
+        <section class="learning-guide">
+          <h2>Mini teoría: Past Simple y Past Continuous</h2>
+          <p class="key-idea">Cuando contamos algo que pasó en el pasado, en inglés podemos usar dos formas principales: <b>Past Simple</b> y <b>Past Continuous</b>.</p>
+
+          <div class="theory-grid">
+            <article class="theory-card">
+              <h3>Past Simple</h3>
+              <p>Usamos <b>Past Simple</b> para hablar de una acción que empezó y terminó en el pasado. Es una acción completa.</p>
+              <div class="examples">
+                <p><b>The wolf knocked on the door.</b><br>El lobo golpeó la puerta.</p>
+              </div>
+            </article>
+
+            <article class="theory-card">
+              <h3>Verbos regulares</h3>
+              <p>En Past Simple, muchos verbos son <b>regulares</b>. Eso significa que forman el pasado agregando <b>-ed</b>.</p>
+              <div class="examples">
+                <p>walk → walked</p>
+              </div>
+              <p class="mini-rule">Algunos cambian un poquito la escritura: dance → danced, cry → cried, stop → stopped.</p>
+            </article>
+
+            <article class="theory-card">
+              <h3>Verbos irregulares</h3>
+              <p>Otros verbos son <b>irregulares</b>. No agregan <b>-ed</b>: cambian de forma.</p>
+              <div class="examples">
+                <p>run → ran</p>
+              </div>
+              <p class="mini-rule">Estos verbos se aprenden de memoria, poco a poco.</p>
+            </article>
+
+            <article class="theory-card">
+              <h3>Past Continuous</h3>
+              <p>Usamos <b>Past Continuous</b> para hablar de una acción que estaba ocurriendo en un momento del pasado.</p>
+              <p>Se forma así: <b>was / were + verbo-ing</b>.</p>
+              <div class="examples">
+                <p><b>The wolf was knocking on the door.</b><br>El lobo estaba golpeando la puerta.</p>
+              </div>
+            </article>
+
+            <article class="theory-card">
+              <h3>Was o were</h3>
+              <p>En Past Continuous usamos <b>was</b> o <b>were</b> según el sujeto.</p>
+              <div class="examples">
+                <p><b>I / he / she / it</b> → was</p>
+                <p>The wolf was running.</p>
+                <p><b>you / we / they</b> → were</p>
+                <p>They were hiding.</p>
+              </div>
+            </article>
+
+            <article class="theory-card">
+              <h3>Cuando usamos los dos juntos</h3>
+              <p>Muchas veces usamos <b>Past Continuous</b> y <b>Past Simple</b> en la misma oración.</p>
+              <p>El Past Continuous muestra la acción larga, la que estaba pasando. El Past Simple muestra la acción corta, la que ocurrió de repente.</p>
+              <div class="examples">
+                <p><b>The wolf was knocking when the pig opened the door.</b></p>
+                <p>was knocking = estaba pasando</p>
+                <p>opened = pasó y terminó</p>
+              </div>
+            </article>
+          </div>
+
+          <p class="key-idea"><b>Idea clave:</b> Past Simple = algo pasó y terminó. Past Continuous = algo estaba pasando.</p>
+
+          <h2>Cómo resolver</h2>
+          <ul class="steps">
+            <li>
+              <span class="step-number">1</span>
+              <div>
+                <p><b>Mirá el verbo entre paréntesis.</b></p>
+                <p class="mini-rule">Ese es el verbo que tenés que cambiar.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">2</span>
+              <div>
+                <p><b>Pensá la acción.</b></p>
+                <p class="mini-rule">Si la acción pasó y terminó → <b>Past Simple</b>. Si estaba pasando → <b>Past Continuous</b>. Si hay dos acciones, la más larga suele ir en Past Continuous y la más corta en Past Simple.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">3</span>
+              <div>
+                <p><b>Past Simple:</b></p>
+                <p class="mini-rule">Verbo regular → agregá <b>-ed</b>. Verbo irregular → cambia de forma.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">4</span>
+              <div>
+                <p><b>Past Continuous:</b></p>
+                <p class="mini-rule"><b>was / were + verbo-ing</b>.</p>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">5</span>
+              <div>
+                <p><b>Pistas:</b></p>
+                <p class="mini-rule"><b>while</b> suele acompañar la acción larga. <b>when</b> suele marcar la acción corta. Primero entendé la oración: no completes automático.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
+
+        <h2>Exercise</h2>
+        <div class="story-box">
+          <p><b>Oh no!</b> The Wolf sneezed and the past tense verbs flew away. Help him put each verb back in the right form before the pigs notice.</p>
+          <p class="rule"><b>Tip:</b> use the verb in brackets. Write Past Simple or Past Continuous.</p>
+        </div>
+        <p class="intro"><b>Example:</b> While the Wolf <b>was baking</b> the cake, he ran out of sugar.</p>
+
+        <article class="sentence" data-answer="was knocking">
+          <div class="letter">A</div>
+          <div>
+            <div class="sentence-main">
+              <div class="line">The Wolf
+                <input aria-label="Answer A" type="text" autocomplete="off" spellcheck="false">
+                <span>(knock)</span> on the door when he felt a sneeze coming.
+              </div>
+              <div class="hint-row"><button class="ghost hint-one" type="button">Pista</button></div>
+            </div>
+            <p class="hint">Look at the two actions. Which one was already happening when the sneeze came?</p>
+            <div class="sentence-actions"><button class="secondary check-one" type="button">Revisar</button></div>
+            <p class="feedback"></p>
+          </div>
+        </article>
+
+        <article class="sentence" data-answer="was shaving">
+          <div class="letter">B</div>
+          <div>
+            <div class="sentence-main">
+              <div class="line">While the Second Pig
+                <input aria-label="Answer B" type="text" autocomplete="off" spellcheck="false">
+                <span>(shave)</span> his chin, the Wolf arrived at the wooden house.
+              </div>
+              <div class="hint-row"><button class="ghost hint-one" type="button">Pista</button></div>
+            </div>
+            <p class="hint">The word <b>while</b> usually points to the longer action that was in progress.</p>
+            <div class="sentence-actions"><button class="secondary check-one" type="button">Revisar</button></div>
+            <p class="feedback"></p>
+          </div>
+        </article>
+
+        <article class="sentence" data-answer="fell">
+          <div class="letter">C</div>
+          <div>
+            <div class="sentence-main">
+              <div class="line">When the straw house
+                <input aria-label="Answer C" type="text" autocomplete="off" spellcheck="false">
+                <span>(fall)</span>, the Wolf was looking for the pig.
+              </div>
+              <div class="hint-row"><button class="ghost hint-one" type="button">Pista</button></div>
+            </div>
+            <p class="hint">This action happened suddenly. Remember: <b>fall</b> is an irregular verb.</p>
+            <div class="sentence-actions"><button class="secondary check-one" type="button">Revisar</button></div>
+            <p class="feedback"></p>
+          </div>
+        </article>
+
+        <article class="sentence" data-answer="was walking">
+          <div class="letter">D</div>
+          <div>
+            <div class="sentence-main">
+              <div class="line">While he
+                <input aria-label="Answer D" type="text" autocomplete="off" spellcheck="false">
+                <span>(walk)</span> to the brick house, the Wolf felt very sick.
+              </div>
+              <div class="hint-row"><button class="ghost hint-one" type="button">Pista</button></div>
+            </div>
+            <p class="hint">Ask yourself: which action was happening for more time?</p>
+            <div class="sentence-actions"><button class="secondary check-one" type="button">Revisar</button></div>
+            <p class="feedback"></p>
+          </div>
+        </article>
+
+        <article class="sentence" data-answer="was cooking">
+          <div class="letter">E</div>
+          <div>
+            <div class="sentence-main">
+              <div class="line">While the third pig
+                <input aria-label="Answer E" type="text" autocomplete="off" spellcheck="false">
+                <span>(cook)</span> dinner, the Wolf knocked on the door.
+              </div>
+              <div class="hint-row"><button class="ghost hint-one" type="button">Pista</button></div>
+            </div>
+            <p class="hint">Use the clue <b>while</b>: it usually goes with the action that was already happening.</p>
+            <div class="sentence-actions"><button class="secondary check-one" type="button">Revisar</button></div>
+            <p class="feedback"></p>
+          </div>
+        </article>
+
+        <article class="sentence" data-answer="ran">
+          <div class="letter">F</div>
+          <div>
+            <div class="sentence-main">
+              <div class="line">While the Wolf was blowing down the straw house, the First Pig
+                <input aria-label="Answer F" type="text" autocomplete="off" spellcheck="false">
+                <span>(run)</span> to his brother's house.
+              </div>
+              <div class="hint-row"><button class="ghost hint-one" type="button">Pista</button></div>
+            </div>
+            <p class="hint">The wolf's action was in progress. The pig's action happened and finished. <b>Run</b> is irregular.</p>
+            <div class="sentence-actions"><button class="secondary check-one" type="button">Revisar</button></div>
+            <p class="feedback"></p>
+          </div>
+        </article>
+
+        <article class="sentence" data-answer="was building">
+          <div class="letter">G</div>
+          <div>
+            <div class="sentence-main">
+              <div class="line">While the Third Pig
+                <input aria-label="Answer G" type="text" autocomplete="off" spellcheck="false">
+                <span>(build)</span> the brick house, his brothers were playing.
+              </div>
+              <div class="hint-row"><button class="ghost hint-one" type="button">Pista</button></div>
+            </div>
+            <p class="hint">The word <b>while</b> gives you a clue: building was the longer action.</p>
+            <div class="sentence-actions"><button class="secondary check-one" type="button">Revisar</button></div>
+            <p class="feedback"></p>
+          </div>
+        </article>
+
+        <article class="sentence" data-answer="sneezed">
+          <div class="letter">H</div>
+          <div>
+            <div class="sentence-main">
+              <div class="line">The little pigs were hiding under the table when the Wolf
+                <input aria-label="Answer H" type="text" autocomplete="off" spellcheck="false">
+                <span>(sneeze)</span>.
+              </div>
+              <div class="hint-row"><button class="ghost hint-one" type="button">Pista</button></div>
+            </div>
+            <p class="hint">One action was already happening. The other action happened suddenly. <b>Sneeze</b> is regular.</p>
+            <div class="sentence-actions"><button class="secondary check-one" type="button">Revisar</button></div>
+            <p class="feedback"></p>
+          </div>
+        </article>
+
+        <section class="verb-practice">
+          <h2>Verb practice</h2>
+          <p class="subtitle">Completa dos formas de cada verbo. Para Past Continuous, usa <b>was</b> con I/he/she/it y <b>were</b> con you/we/they.</p>
+          <div class="table-wrap">
+            <table class="practice-table">
+              <thead>
+                <tr>
+                  <th>Infinitive</th>
+                  <th>Forma 1</th>
+                  <th>Forma 2</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-answers="baked|was baking">
+                  <td>bake <span class="verb-type">regular</span></td>
+                  <td><span class="answer-label">Past Simple</span><input aria-label="Past simple bake" type="text" autocomplete="off" spellcheck="false"></td>
+                  <td><span class="answer-label">Past Continuous: I / he / she / it</span><input aria-label="Past continuous was bake" type="text" autocomplete="off" spellcheck="false"></td>
+                </tr>
+                <tr data-answers="knocked|were knocking">
+                  <td>knock <span class="verb-type">regular</span></td>
+                  <td><span class="answer-label">Past Simple</span><input aria-label="Past simple knock" type="text" autocomplete="off" spellcheck="false"></td>
+                  <td><span class="answer-label">Past Continuous: you / we / they</span><input aria-label="Past continuous were knock" type="text" autocomplete="off" spellcheck="false"></td>
+                </tr>
+                <tr data-answers="was shaving|shaved">
+                  <td>shave <span class="verb-type">regular</span></td>
+                  <td><span class="answer-label">Past Continuous: I / he / she / it</span><input aria-label="Past continuous was shave" type="text" autocomplete="off" spellcheck="false"></td>
+                  <td><span class="answer-label">Past Simple</span><input aria-label="Past simple shave" type="text" autocomplete="off" spellcheck="false"></td>
+                </tr>
+                <tr data-answers="fell|were falling">
+                  <td>fall <span class="verb-type">irregular</span></td>
+                  <td><span class="answer-label">Past Simple</span><input aria-label="Past simple fall" type="text" autocomplete="off" spellcheck="false"></td>
+                  <td><span class="answer-label">Past Continuous: you / we / they</span><input aria-label="Past continuous were fall" type="text" autocomplete="off" spellcheck="false"></td>
+                </tr>
+                <tr data-answers="was walking|walked">
+                  <td>walk <span class="verb-type">regular</span></td>
+                  <td><span class="answer-label">Past Continuous: I / he / she / it</span><input aria-label="Past continuous was walk" type="text" autocomplete="off" spellcheck="false"></td>
+                  <td><span class="answer-label">Past Simple</span><input aria-label="Past simple walk" type="text" autocomplete="off" spellcheck="false"></td>
+                </tr>
+                <tr data-answers="cooked|were cooking">
+                  <td>cook <span class="verb-type">regular</span></td>
+                  <td><span class="answer-label">Past Simple</span><input aria-label="Past simple cook" type="text" autocomplete="off" spellcheck="false"></td>
+                  <td><span class="answer-label">Past Continuous: you / we / they</span><input aria-label="Past continuous were cook" type="text" autocomplete="off" spellcheck="false"></td>
+                </tr>
+                <tr data-answers="ran|was running">
+                  <td>run <span class="verb-type">irregular</span></td>
+                  <td><span class="answer-label">Past Simple</span><input aria-label="Past simple run" type="text" autocomplete="off" spellcheck="false"></td>
+                  <td><span class="answer-label">Past Continuous: I / he / she / it</span><input aria-label="Past continuous was run" type="text" autocomplete="off" spellcheck="false"></td>
+                </tr>
+                <tr data-answers="were building|built">
+                  <td>build <span class="verb-type">irregular</span></td>
+                  <td><span class="answer-label">Past Continuous: you / we / they</span><input aria-label="Past continuous were build" type="text" autocomplete="off" spellcheck="false"></td>
+                  <td><span class="answer-label">Past Simple</span><input aria-label="Past simple build" type="text" autocomplete="off" spellcheck="false"></td>
+                </tr>
+                <tr data-answers="was sneezing|sneezed">
+                  <td>sneeze <span class="verb-type">regular</span></td>
+                  <td><span class="answer-label">Past Continuous: I / he / she / it</span><input aria-label="Past continuous was sneeze" type="text" autocomplete="off" spellcheck="false"></td>
+                  <td><span class="answer-label">Past Simple</span><input aria-label="Past simple sneeze" type="text" autocomplete="off" spellcheck="false"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-actions">
+            <button class="secondary" id="check-verbs">Revisar verbos</button>
+            <button class="ghost" id="reset-verbs">Limpiar verbos</button>
+          </div>
+          <div class="complete-card" id="complete-card">Mission complete. Great work!</div>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const sentences = Array.from(document.querySelectorAll(".sentence"));
+    const reset = document.getElementById("reset");
+    const verbRows = Array.from(document.querySelectorAll(".practice-table tbody tr"));
+    const checkVerbs = document.getElementById("check-verbs");
+    const resetVerbs = document.getElementById("reset-verbs");
+    const progressFill = document.getElementById("progress-fill");
+    const missionCount = document.getElementById("mission-count");
+    const badges = Array.from(document.querySelectorAll(".badge"));
+    const completeCard = document.getElementById("complete-card");
+
+    function cleanAnswer(value) {
+      return value.trim().replace(/\s+/g, " ").toLowerCase();
+    }
+
+    function updateScore() {
+      const sentenceTotal = sentences.reduce((total, sentence) => {
+        const isCorrect = sentence.querySelector("input").classList.contains("correct");
+
+        if (!isCorrect) {
+          return total;
+        }
+
+        return total + (sentence.dataset.hintUsed === "true" ? 0.5 : 1);
+      }, 0);
+      const verbInputs = Array.from(document.querySelectorAll(".practice-table tbody input"));
+      const verbTotal = verbInputs.filter((input) => input.classList.contains("correct")).length;
+      const total = sentenceTotal + verbTotal;
+      const max = sentences.length + verbInputs.length;
+
+      missionCount.textContent = `${Number.isInteger(total) ? total : total.toFixed(1)} de ${max}`;
+      progressFill.style.width = `${(total / max) * 100}%`;
+
+      badges.forEach((badge) => {
+        const target = Number(badge.dataset.badge);
+        badge.classList.toggle("unlocked", total >= target);
+      });
+
+      completeCard.classList.toggle("visible", total === max);
+    }
+
+    function reviewSentence(sentence) {
+      const input = sentence.querySelector("input");
+      const feedback = sentence.querySelector(".feedback");
+      const answer = sentence.dataset.answer;
+      const studentAnswer = cleanAnswer(input.value);
+      const isEmpty = studentAnswer === "";
+      const isCorrect = studentAnswer === answer;
+
+      input.classList.remove("correct", "wrong");
+      feedback.className = "feedback";
+
+      if (isEmpty) {
+        feedback.textContent = "Escribí una respuesta.";
+        updateScore();
+        return;
+      }
+
+      if (isCorrect) {
+        input.classList.add("correct");
+        sentence.classList.add("correct-card");
+        feedback.classList.add("good");
+        feedback.textContent = "Correct!";
+      } else {
+        input.classList.add("wrong");
+        sentence.classList.remove("correct-card");
+        feedback.classList.add("bad");
+        feedback.textContent = "Try again.";
+      }
+
+      updateScore();
+    }
+
+    function reviewVerbTable() {
+      verbRows.forEach((row) => {
+        const inputs = row.querySelectorAll("input");
+        const expected = row.dataset.answers.split("|");
+
+        inputs.forEach((input, index) => {
+          const isCorrect = cleanAnswer(input.value) === expected[index];
+
+          input.classList.remove("correct", "wrong");
+
+          if (cleanAnswer(input.value) === "") {
+            return;
+          }
+
+          input.classList.add(isCorrect ? "correct" : "wrong");
+        });
+      });
+
+      updateScore();
+    }
+
+    function resetVerbTable() {
+      verbRows.forEach((row) => {
+        row.querySelectorAll("input").forEach((input) => {
+          input.value = "";
+          input.classList.remove("correct", "wrong");
+        });
+      });
+
+      updateScore();
+    }
+
+    function resetExercise() {
+      sentences.forEach((sentence) => {
+        const input = sentence.querySelector("input");
+        const feedback = sentence.querySelector(".feedback");
+
+        input.value = "";
+        input.classList.remove("correct", "wrong");
+        sentence.dataset.hintUsed = "false";
+        sentence.classList.remove("correct-card");
+        feedback.className = "feedback";
+        feedback.textContent = "";
+        sentence.querySelector(".hint").classList.remove("visible");
+        sentence.querySelector(".hint-one").textContent = "Pista";
+      });
+
+      resetVerbTable();
+      updateScore();
+    }
+
+    sentences.forEach((sentence) => {
+      sentence.dataset.hintUsed = "false";
+
+      sentence.querySelector("input").addEventListener("input", () => {
+        const input = sentence.querySelector("input");
+        const feedback = sentence.querySelector(".feedback");
+
+        input.classList.remove("correct", "wrong");
+        sentence.classList.remove("correct-card");
+        feedback.className = "feedback";
+        feedback.textContent = "";
+        updateScore();
+      });
+
+      sentence.querySelector("input").addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          reviewSentence(sentence);
+        }
+      });
+
+      sentence.querySelector(".hint-one").addEventListener("click", () => {
+        const hintText = sentence.querySelector(".hint");
+        const hintButton = sentence.querySelector(".hint-one");
+        const shouldShow = !hintText.classList.contains("visible");
+
+        hintText.classList.toggle("visible", shouldShow);
+        hintButton.textContent = shouldShow ? "Ocultar pista" : "Pista";
+
+        if (shouldShow) {
+          sentence.dataset.hintUsed = "true";
+          updateScore();
+        }
+      });
+
+      sentence.querySelector(".check-one").addEventListener("click", () => {
+        reviewSentence(sentence);
+      });
+    });
+
+    verbRows.forEach((row) => {
+      row.querySelectorAll("input").forEach((input) => {
+        input.addEventListener("input", () => {
+          input.classList.remove("correct", "wrong");
+          updateScore();
+        });
+      });
+    });
+
+    reset.addEventListener("click", resetExercise);
+    checkVerbs.addEventListener("click", reviewVerbTable);
+    resetVerbs.addEventListener("click", resetVerbTable);
+  </script>
+</body>
+</html>
